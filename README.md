@@ -2,6 +2,18 @@
 
 Корпоративная система бизнес-аналитики (BI) и управленческой отчетности.
 
+## Deploy to Render
+
+[![Deploy to Render](https://render.com/images/deploy-to-render-button.svg)](https://render.com/deploy?repo=https://github.com/AlexanderCherepkin/bi-platform-api)
+
+Click the button above to provision a free PostgreSQL database and a Docker web
+service for the FastAPI backend. After the first deploy, open the Render Shell
+for `bi-platform-api` and run `python scripts/init_remote_db.py` to seed demo users.
+
+Then set the backend URL in your Vercel frontend environment variables:
+`API_URL`, `NEXT_PUBLIC_API_URL`, `NEXT_PUBLIC_WS_URL`, `API_USER`, `API_PASS`.
+See `DEPLOY.md` for the full checklist.
+
 ## Архитектура
 
 - **DWH:** PostgreSQL 16 (реляционное хранилище данных)
