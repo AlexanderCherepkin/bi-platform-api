@@ -6,7 +6,6 @@ services:
   - type: web
     name: bi-platform-api
     runtime: docker
-    rootDir: bi_platform
     dockerfilePath: ./api/Dockerfile.prod
     envVars:
       - key: DATABASE_URL
