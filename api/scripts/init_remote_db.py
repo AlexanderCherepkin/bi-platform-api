@@ -1,7 +1,6 @@
 """
 One-time remote DB bootstrap for Render/Fly/Railway.
-Creates tables from SQLAlchemy models, applies sorted SQL migrations once,
-and seeds demo users and templates.
+Applies sorted SQL migrations once and seeds demo users and templates.
 """
 import os
 import glob
@@ -11,7 +10,6 @@ from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from deps import engine
-from models import Base
 from init_db import main as seed_db
 
 MIGRATIONS_DIR = os.path.join(os.path.dirname(os.path.dirname(__file__)), "db_migrations")
@@ -52,8 +50,7 @@ def apply_migration(conn, filepath: str, filename: str):
 
 
 def main():
-    print("Creating SQLAlchemy tables if missing...")
-    Base.metadata.create_all(bind=engine)
+    print("Applying SQL migrations...")
 
     with engine.connect() as conn:
         ensure_migration_log_table(conn)
