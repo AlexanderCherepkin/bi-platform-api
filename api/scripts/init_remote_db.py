@@ -84,6 +84,9 @@ def main():
         migration_files = sorted(glob.glob(os.path.join(MIGRATIONS_DIR, "*.sql")))
         for filepath in migration_files:
             filename = os.path.basename(filepath)
+            if filename == "003_metabase_app_db.sql":
+                print(f"Skipping Metabase-only migration: {filename}")
+                continue
             if already_applied(conn, filename):
                 print(f"Skipping already applied migration: {filename}")
                 continue
