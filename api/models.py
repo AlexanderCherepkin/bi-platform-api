@@ -54,7 +54,7 @@ class DimAccount(Base):
 
 class DimDate(Base):
     __tablename__ = "dim_date"
-    date_id = Column(Integer, primary_key=True)
+    date_id = Column(Date, primary_key=True)
     full_date = Column(Date, nullable=False, unique=True)
     year = Column(Integer, nullable=False)
     quarter = Column(Integer, nullable=False)
