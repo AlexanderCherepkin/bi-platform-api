@@ -1,0 +1,21 @@
+{
+  "migrations_dir": "bi_platform/db/migrations",
+  "output_dir_types": "bi_platform/vercel-app/src/types/generated",
+  "output_dir_actions": "bi_platform/vercel-app/src/app/actions/generated",
+  "api_base_url_env": "NEXT_PUBLIC_API_URL",
+  "default_api_base_url": "http://localhost:8000",
+  "whitelist": [],
+  "blacklist": [
+    "dim_date"
+  ],
+  "include_views": true,
+  "server_actions_for": [
+    "dim_currency",
+    "dim_counterparty",
+    "dim_department",
+    "dim_employee",
+    "dim_product",
+    "dim_account",
+    "fact_exchange_rates"
+  ]
+}

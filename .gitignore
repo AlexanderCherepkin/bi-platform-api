@@ -1,0 +1,20 @@
+# Frontend lives in a separate Vercel repo
+vercel-app/
+
+# Local environments
+.env
+.env.local
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Docker / logs
+*.log
+.dockerignore
+docker-compose.override.yml
+
+# Data / OS
+.DS_Store
+Thumbs.db
