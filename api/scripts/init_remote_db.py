@@ -49,12 +49,31 @@ def apply_migration(conn, filepath: str, filename: str):
     print(f"Applied migration: {filename}")
 
 
+def drop_all_tables(conn):
+    print("DROP_ALL_TABLES=1: dropping all user tables...")
+    result = conn.execute(text(
+        """
+        SELECT tablename FROM pg_tables
+        WHERE schemaname = 'public';
+        """
+    ))
+    tables = [row[0] for row in result]
+    for table in tables:
+        conn.execute(text(f'DROP TABLE IF EXISTS "{table}" CASCADE;'))
+    conn.commit()
+    print(f"Dropped {len(tables)} tables.")
+
+
 def main():
     print("Applying SQL migrations...")
 
     force_reinit = os.getenv("FORCE_REINIT", "0") == "1"
+    drop_all = os.getenv("DROP_ALL_TABLES", "0") == "1"
 
     with engine.connect() as conn:
+        if drop_all:
+            drop_all_tables(conn)
+
         if force_reinit:
             print("FORCE_REINIT=1: resetting schema_migrations...")
             conn.execute(text("DROP TABLE IF EXISTS schema_migrations CASCADE;"))
