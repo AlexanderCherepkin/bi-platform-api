@@ -50,18 +50,18 @@ def apply_migration(conn, filepath: str, filename: str):
 
 
 def drop_all_tables(conn):
-    print("DROP_ALL_TABLES=1: dropping all user tables...")
+    print("DROP_ALL_TABLES=1: dropping all user tables across schemas...")
     result = conn.execute(text(
         """
-        SELECT tablename FROM pg_tables
-        WHERE schemaname = 'public';
+        SELECT schemaname, tablename FROM pg_tables
+        WHERE schemaname NOT IN ('pg_catalog', 'information_schema');
         """
     ))
-    tables = [row[0] for row in result]
-    for table in tables:
-        conn.execute(text(f'DROP TABLE IF EXISTS "{table}" CASCADE;'))
+    rows = list(result)
+    for schema, table in rows:
+        conn.execute(text(f'DROP TABLE IF EXISTS "{schema}"."{table}" CASCADE;'))
     conn.commit()
-    print(f"Dropped {len(tables)} tables.")
+    print(f"Dropped {len(rows)} tables.")
 
 
 def main():
