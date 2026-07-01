@@ -52,7 +52,14 @@ def apply_migration(conn, filepath: str, filename: str):
 def main():
     print("Applying SQL migrations...")
 
+    force_reinit = os.getenv("FORCE_REINIT", "0") == "1"
+
     with engine.connect() as conn:
+        if force_reinit:
+            print("FORCE_REINIT=1: resetting schema_migrations...")
+            conn.execute(text("DROP TABLE IF EXISTS schema_migrations CASCADE;"))
+            conn.commit()
+
         ensure_migration_log_table(conn)
 
         migration_files = sorted(glob.glob(os.path.join(MIGRATIONS_DIR, "*.sql")))

@@ -18,6 +18,8 @@ services:
         generateValue: true
       - key: RUN_DB_INIT
         value: "1"
+      - key: FORCE_REINIT
+        value: "1"
       - key: ACCESS_TOKEN_EXPIRE_MINUTES
         value: "480"
     plan: free
